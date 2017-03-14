@@ -22,7 +22,7 @@ describe('Singapore (SG)', () => {
                 'L298812387'
             ];
             cases.forEach((ic) => {
-                assert.equal(validator(ic).result, true);
+                assert.equal(validator(ic).success, true);
                 assert.equal(validator(ic).reason, null);
             })
         });
@@ -37,7 +37,7 @@ describe('Singapore (SG)', () => {
                 'i am fantastic'
             ];
             cases.forEach((ic) => {
-                assert.equal(validator(ic).result, false);
+                assert.equal(validator(ic).success, false);
                 assert.equal(validator(ic).reason, 'error_length');
             })
         });
@@ -51,7 +51,7 @@ describe('Singapore (SG)', () => {
                 ' 216108713',
             ];
             cases.forEach((ic) => {
-                assert.equal(validator(ic).result, false);
+                assert.equal(validator(ic).success, false);
                 assert.equal(validator(ic).reason, 'error_format');
             })
         });
@@ -66,7 +66,7 @@ describe('Singapore (SG)', () => {
                 'L298812383'
             ];
             cases.forEach((ic) => {
-                assert.equal(validator(ic).result, false);
+                assert.equal(validator(ic).success, false);
                 assert.equal(validator(ic).reason, 'error_checksum');
             })
         });

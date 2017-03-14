@@ -1,5 +1,5 @@
 ;(function(global) {
-///<reference path='types.ts'/>
+///<reference path='../types.ts'/>
 var IDValidators = {};
 var IDValidator;
 (function (IDValidator) {
@@ -71,14 +71,14 @@ var IDValidator;
     function validateSGIC(ic) {
       var error = validateNRIC(ic);
       return {
-        result: !error,
+        success: !error,
         reason: error
       };
     }
     sg.validateSGIC = validateSGIC;
   }(sg = IDValidator.sg || (IDValidator.sg = {})));
 }(IDValidator || (IDValidator = {})));
-///<reference path='types.ts'/>
+///<reference path='../types.ts'/>
 var IDValidator;
 (function (IDValidator) {
   var tw;
@@ -103,13 +103,13 @@ var IDValidator;
     function validateTWID(ic) {
       if (!ic || ic.length !== 10) {
         return {
-          result: false,
+          success: false,
           reason: 'error_length'
         };
       }
       if (!/^[A-Z]\d{9}$/i.test(ic)) {
         return {
-          result: false,
+          success: false,
           reason: 'error_format'
         };
       }
@@ -126,10 +126,10 @@ var IDValidator;
       }
       var checksumCorrect = (sum % 10 == 0 ? 0 : 10 - sum % 10) == parseInt(end, 10);
       if (checksumCorrect) {
-        return { result: true };
+        return { success: true };
       } else {
         return {
-          result: false,
+          success: false,
           reason: 'error_checksum'
         };
       }
@@ -138,13 +138,17 @@ var IDValidator;
   }(tw = IDValidator.tw || (IDValidator.tw = {})));
 }(IDValidator || (IDValidator = {})));
 IDValidators = function (exports) {
-  var validateSGIC = IDValidator.sg.validateSGIC;
-  var validateTWID = IDValidator.tw.validateTWID;
+  var providers = {
+    'SG': { 'NRIC': IDValidator.sg.validateSGIC },
+    'TW': { 'ID': IDValidator.tw.validateTWID }
+  };
   function getValidator(country, document) {
-    if (country == 'SG') {
-      return validateSGIC;
-    } else if (country == 'TW') {
-      return validateTWID;
+    if (providers.hasOwnProperty(country)) {
+      var countryValidators = providers[country];
+      if (countryValidators.hasOwnProperty(document)) {
+        var validator = countryValidators[document];
+        return validator;
+      }
     }
   }
   exports.getValidator = getValidator;

@@ -71,7 +71,7 @@ var IDValidator;
     function validateSGIC(ic) {
       var error = validateNRIC(ic);
       return {
-        result: !error,
+        success: !error,
         reason: error
       };
     }
@@ -103,13 +103,13 @@ var IDValidator;
     function validateTWID(ic) {
       if (!ic || ic.length !== 10) {
         return {
-          result: false,
+          success: false,
           reason: 'error_length'
         };
       }
       if (!/^[A-Z]\d{9}$/i.test(ic)) {
         return {
-          result: false,
+          success: false,
           reason: 'error_format'
         };
       }
@@ -126,10 +126,10 @@ var IDValidator;
       }
       var checksumCorrect = (sum % 10 == 0 ? 0 : 10 - sum % 10) == parseInt(end, 10);
       if (checksumCorrect) {
-        return { result: true };
+        return { success: true };
       } else {
         return {
-          result: false,
+          success: false,
           reason: 'error_checksum'
         };
       }

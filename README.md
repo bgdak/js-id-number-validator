@@ -41,7 +41,7 @@ And the result is in format:
 
 ```
 {
-    'result': true or false,
+    'success': true or false,
     'reason': string if the result is false
 }
 ```

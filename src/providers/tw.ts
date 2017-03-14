@@ -23,14 +23,14 @@ namespace IDValidator.tw {
     export function validateTWID(ic: string): ValidateResult {
         if (!ic || ic.length !== 10) {
             return {
-                result: false,
+                success: false,
                 reason: 'error_length'
             };
         }
 
         if (!/^[A-Z]\d{9}$/i.test(ic)) {
             return {
-                result: false,
+                success: false,
                 reason: 'error_format'
             };
         }
@@ -51,11 +51,11 @@ namespace IDValidator.tw {
         const checksumCorrect = (sum % 10 == 0 ? 0 : (10 - sum % 10)) == parseInt(end, 10);
         if (checksumCorrect) {
             return {
-                result: true
+                success: true
             };
         } else {
             return {
-                result: false,
+                success: false,
                 reason: 'error_checksum'
             };
         }

@@ -55,7 +55,7 @@ namespace IDValidator.sg {
     export function validateSGIC(ic: string): ValidateResult {
         const error = validateNRIC(ic);
         return {
-            result: !error,
+            success: !error,
             reason: error
         }
     }

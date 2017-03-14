@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>ID Number Validators</title>
+</head>
+<body>
+<h1>ID Number Validator</h1>
+<p>
+    This ID Number Validator is powered by <a href="https://github.com/imdreamrunner/js-id-number-validator">js-id-number-validator</a>.
+</p>
+
+<h2>Validators</h2>
+
+<h3>Singapore NRIC Validator</h3>
+
+<input id="sg-nric">
+
+<input onclick="validateSgNric()" type="button" value="Validate!">
+
+<script src="dist/bin/IDValidators.js"></script>
+
+<script>
+    function validateSgNric() {
+        var validator = IDValidators.getValidator('SG', 'NRIC');
+        var output = validator(document.getElementById("sg-nric").value);
+        if (output.success) {
+            alert("Success.")
+        } else {
+            alert("Error: " + output.reason);
+        }
+    }
+</script>
+</body>
+</html>

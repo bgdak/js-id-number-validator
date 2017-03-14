@@ -2,7 +2,7 @@
 ///<reference path='providers/sg'/>
 ///<reference path='providers/tw'/>
 
-const providers = {
+const providers : any = {
     'SG': {
         'NRIC': IDValidator.sg.validateSGIC
     },

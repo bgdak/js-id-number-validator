@@ -1,6 +1,6 @@
 declare namespace IDValidator {
     interface ValidateResult {
-        result: boolean;
+        success: boolean;
         reason?: string;
     }
 }
