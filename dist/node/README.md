@@ -4,7 +4,9 @@ ID Number Validator for Node
 ## Introduction
 
 This is a collection of validators of identity document number
-for JavaScript applications.
+for node applications.
+
+You can also use <a href="https://www.npmjs.com/package/js-id-number-validator">its browser version</a>.
 
 ## Usage
 
@@ -31,7 +33,7 @@ And the result is in format:
 
 ```
 {
-    'result': true or false,
+    'success': true or false,
     'reason': string if the result is false
 }
 ```
@@ -41,5 +43,5 @@ And the result is in format:
 | Country | Document |
 |:-------:|:--------:|
 | SG (Singapore) | NRIC |
-
+| TW (Taiwan) | ID (身份證字號) |
 
