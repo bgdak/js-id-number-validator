@@ -1,11 +1,13 @@
 ;(function(global) {
-///<reference path='../types.ts'/>
-var IDValidators = {};
-var IDValidator;
-(function (IDValidator) {
-  var sg;
-  (function (sg) {
-    function validateNRIC(str) {
+var types = {}, providers_SG_NRIC = {}, providers_TW_ID = {}, IDValidators = {}, index = {};
+types = function (exports) {
+  return exports;
+}(types);
+providers_SG_NRIC = function (exports) {
+  var SingaporeNRICValidator = function () {
+    function SingaporeNRICValidator() {
+    }
+    SingaporeNRICValidator.validateNRIC = function (str) {
       // Modified from https://gist.github.com/eddiemoore/7131781
       // Originally base on Based on http://www.samliew.com/icval/
       if (!str || str.length != 9)
@@ -67,23 +69,24 @@ var IDValidator;
       if (icChar[8] !== theAlpha) {
         return 'error_checksum';
       }
-    }
-    function validateSGIC(ic) {
-      var error = validateNRIC(ic);
+    };
+    SingaporeNRICValidator.prototype.validate = function (id) {
+      var error = SingaporeNRICValidator.validateNRIC(id);
       return {
         success: !error,
         reason: error
       };
+    };
+    return SingaporeNRICValidator;
+  }();
+  exports.SingaporeNRICValidator = SingaporeNRICValidator;
+  return exports;
+}(providers_SG_NRIC);
+providers_TW_ID = function (exports) {
+  var TaiwanIDValidator = function () {
+    function TaiwanIDValidator() {
     }
-    sg.validateSGIC = validateSGIC;
-  }(sg = IDValidator.sg || (IDValidator.sg = {})));
-}(IDValidator || (IDValidator = {})));
-///<reference path='../types.ts'/>
-var IDValidator;
-(function (IDValidator) {
-  var tw;
-  (function (tw) {
-    function getTWIDFirstCode(c) {
+    TaiwanIDValidator.getTWIDFirstCode = function (c) {
       if (c == 'I') {
         return 34;
       }
@@ -99,24 +102,24 @@ var IDValidator;
       if (c <= 'Z') {
         return c.charCodeAt(0) - 'P'.charCodeAt(0) + 23;
       }
-    }
-    function validateTWID(ic) {
-      if (!ic || ic.length !== 10) {
+    };
+    TaiwanIDValidator.prototype.validate = function (id) {
+      if (!id || id.length !== 10) {
         return {
           success: false,
           reason: 'error_length'
         };
       }
-      if (!/^[A-Z]\d{9}$/i.test(ic)) {
+      if (!/^[A-Z]\d{9}$/i.test(id)) {
         return {
           success: false,
           reason: 'error_format'
         };
       }
-      var start = ic.charAt(0);
-      var mid = ic.substring(1, 9);
-      var end = ic.charAt(9);
-      var iStart = getTWIDFirstCode(start);
+      var start = id.charAt(0);
+      var mid = id.substring(1, 9);
+      var end = id.charAt(9);
+      var iStart = TaiwanIDValidator.getTWIDFirstCode(start);
       var sum = Math.floor(iStart / 10) + iStart % 10 * 9;
       var iflag = 8;
       for (var i = 0; i < mid.length; i++) {
@@ -133,25 +136,36 @@ var IDValidator;
           reason: 'error_checksum'
         };
       }
-    }
-    tw.validateTWID = validateTWID;
-  }(tw = IDValidator.tw || (IDValidator.tw = {})));
-}(IDValidator || (IDValidator = {})));
-IDValidators = function (exports) {
-  var providers = {
-    'SG': { 'NRIC': IDValidator.sg.validateSGIC },
-    'TW': { 'ID': IDValidator.tw.validateTWID }
-  };
-  function getValidator(country, document) {
-    if (providers.hasOwnProperty(country)) {
-      var countryValidators = providers[country];
-      if (countryValidators.hasOwnProperty(document)) {
-        var validator = countryValidators[document];
-        return validator;
-      }
-    }
-  }
-  exports.getValidator = getValidator;
+    };
+    return TaiwanIDValidator;
+  }();
+  exports.TaiwanIDValidator = TaiwanIDValidator;
   return exports;
-}(IDValidators);
+}(providers_TW_ID);
+IDValidators = function (exports, SG_NRIC_1, TW_ID_1) {
+  var providerRegistry = {
+    'SG': { 'NRIC': SG_NRIC_1.SingaporeNRICValidator },
+    'TW': { 'ID': TW_ID_1.TaiwanIDValidator }
+  };
+  var IDValidators = function () {
+    function IDValidators() {
+    }
+    IDValidators.getValidator = function (country, document) {
+      if (providerRegistry.hasOwnProperty(country)) {
+        var countryValidators = providerRegistry[country];
+        if (countryValidators.hasOwnProperty(document)) {
+          var validator = new countryValidators[document]();
+          return validator.validate;
+        }
+      }
+    };
+    return IDValidators;
+  }();
+  exports.IDValidators = IDValidators;
+  return exports;
+}(IDValidators, providers_SG_NRIC, providers_TW_ID);
+index = function (exports, IDValidators_1) {
+  exports = IDValidators_1.IDValidators;
+  return exports;
+}(index, IDValidators);
 global.IDValidators=IDValidators;}(window));

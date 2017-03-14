@@ -24,8 +24,8 @@ gulp.task("build-amd", function () {
     });
     var tsResult = tsProject.src().pipe(tsProject());
     return merge2([
-        tsResult.js.pipe(gulp.dest("dist/commonjs")),
-        tsResult.dts.pipe(gulp.dest("dist/commonjs"))
+        tsResult.js.pipe(gulp.dest("dist/amd")),
+        tsResult.dts.pipe(gulp.dest("dist/amd"))
     ]);
 });
 

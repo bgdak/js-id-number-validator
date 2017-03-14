@@ -1,9 +1,13 @@
+define("types", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 ///<reference path='../types.ts'/>
-var IDValidator;
-(function (IDValidator) {
-    var sg;
-    (function (sg) {
-        function validateNRIC(str) {
+define("providers/SG_NRIC", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var SingaporeNRICValidator = (function () {
+        function SingaporeNRICValidator() {
+        }
+        SingaporeNRICValidator.validateNRIC = function (str) {
             // Modified from https://gist.github.com/eddiemoore/7131781
             // Originally base on Based on http://www.samliew.com/icval/
             if (!str || str.length != 9)
@@ -42,23 +46,25 @@ var IDValidator;
             if (icChar[8] !== theAlpha) {
                 return 'error_checksum';
             }
-        }
-        function validateSGIC(ic) {
-            var error = validateNRIC(ic);
+        };
+        SingaporeNRICValidator.prototype.validate = function (id) {
+            var error = SingaporeNRICValidator.validateNRIC(id);
             return {
                 success: !error,
                 reason: error
             };
-        }
-        sg.validateSGIC = validateSGIC;
-    })(sg = IDValidator.sg || (IDValidator.sg = {}));
-})(IDValidator || (IDValidator = {}));
+        };
+        return SingaporeNRICValidator;
+    }());
+    exports.SingaporeNRICValidator = SingaporeNRICValidator;
+});
 ///<reference path='../types.ts'/>
-var IDValidator;
-(function (IDValidator) {
-    var tw;
-    (function (tw) {
-        function getTWIDFirstCode(c) {
+define("providers/TW_ID", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var TaiwanIDValidator = (function () {
+        function TaiwanIDValidator() {
+        }
+        TaiwanIDValidator.getTWIDFirstCode = function (c) {
             if (c == 'I') {
                 return 34;
             }
@@ -74,24 +80,24 @@ var IDValidator;
             if (c <= 'Z') {
                 return c.charCodeAt(0) - 'P'.charCodeAt(0) + 23;
             }
-        }
-        function validateTWID(ic) {
-            if (!ic || ic.length !== 10) {
+        };
+        TaiwanIDValidator.prototype.validate = function (id) {
+            if (!id || id.length !== 10) {
                 return {
                     success: false,
                     reason: 'error_length'
                 };
             }
-            if (!/^[A-Z]\d{9}$/i.test(ic)) {
+            if (!/^[A-Z]\d{9}$/i.test(id)) {
                 return {
                     success: false,
                     reason: 'error_format'
                 };
             }
-            var start = ic.charAt(0);
-            var mid = ic.substring(1, 9);
-            var end = ic.charAt(9);
-            var iStart = getTWIDFirstCode(start);
+            var start = id.charAt(0);
+            var mid = id.substring(1, 9);
+            var end = id.charAt(9);
+            var iStart = TaiwanIDValidator.getTWIDFirstCode(start);
             var sum = Math.floor(iStart / 10) + (iStart % 10) * 9;
             var iflag = 8;
             for (var i = 0; i < mid.length; i++) {
@@ -111,31 +117,41 @@ var IDValidator;
                     reason: 'error_checksum'
                 };
             }
-        }
-        tw.validateTWID = validateTWID;
-    })(tw = IDValidator.tw || (IDValidator.tw = {}));
-})(IDValidator || (IDValidator = {}));
+        };
+        return TaiwanIDValidator;
+    }());
+    exports.TaiwanIDValidator = TaiwanIDValidator;
+});
 ///<reference path='types'/>
-///<reference path='providerRegistry/sg'/>
-///<reference path='providerRegistry/tw'/>
-define("IDValidators", ["require", "exports"], function (require, exports) {
+///<reference path='providers/SG_NRIC'/>
+///<reference path='providers/TW_ID'/>
+define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW_ID"], function (require, exports, SG_NRIC_1, TW_ID_1) {
     "use strict";
-    var providers = {
+    var providerRegistry = {
         'SG': {
-            'NRIC': IDValidator.sg.validateSGIC
+            'NRIC': SG_NRIC_1.SingaporeNRICValidator
         },
         'TW': {
-            'ID': IDValidator.tw.validateTWID
+            'ID': TW_ID_1.TaiwanIDValidator
         }
     };
-    function getValidator(country, document) {
-        if (providers.hasOwnProperty(country)) {
-            var countryValidators = providers[country];
-            if (countryValidators.hasOwnProperty(document)) {
-                var validator = countryValidators[document];
-                return validator;
-            }
+    var IDValidators = (function () {
+        function IDValidators() {
         }
-    }
-    exports.getValidator = getValidator;
+        IDValidators.getValidator = function (country, document) {
+            if (providerRegistry.hasOwnProperty(country)) {
+                var countryValidators = providerRegistry[country];
+                if (countryValidators.hasOwnProperty(document)) {
+                    var validator = new countryValidators[document]();
+                    return validator.validate;
+                }
+            }
+        };
+        return IDValidators;
+    }());
+    exports.IDValidators = IDValidators;
+});
+define("index", ["require", "exports", "IDValidators"], function (require, exports, IDValidators_1) {
+    "use strict";
+    module.exports = IDValidators_1.IDValidators;
 });
