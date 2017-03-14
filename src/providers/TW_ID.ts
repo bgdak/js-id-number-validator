@@ -1,8 +1,9 @@
 ///<reference path='../types.ts'/>
 
-namespace IDValidator.tw {
+import {Validator, ValidateResult} from "../types";
 
-    function getTWIDFirstCode(c: string) {
+export class TaiwanIDValidator implements Validator {
+    static getTWIDFirstCode(c: string) {
         if (c == 'I') {
             return 34;
         }
@@ -20,25 +21,25 @@ namespace IDValidator.tw {
         }
     }
 
-    export function validateTWID(ic: string): ValidateResult {
-        if (!ic || ic.length !== 10) {
+    validate(id:string):ValidateResult {
+        if (!id || id.length !== 10) {
             return {
                 success: false,
                 reason: 'error_length'
             };
         }
 
-        if (!/^[A-Z]\d{9}$/i.test(ic)) {
+        if (!/^[A-Z]\d{9}$/i.test(id)) {
             return {
                 success: false,
                 reason: 'error_format'
             };
         }
 
-        const start = ic.charAt(0);
-        const mid = ic.substring(1, 9);
-        const end = ic.charAt(9);
-        const iStart = getTWIDFirstCode(start);
+        const start = id.charAt(0);
+        const mid = id.substring(1, 9);
+        const end = id.charAt(9);
+        const iStart = TaiwanIDValidator.getTWIDFirstCode(start);
 
         let sum = Math.floor(iStart / 10) + (iStart % 10) * 9;
         let iflag = 8;
@@ -59,6 +60,6 @@ namespace IDValidator.tw {
                 reason: 'error_checksum'
             };
         }
-
     }
+
 }

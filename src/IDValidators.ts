@@ -1,22 +1,27 @@
 ///<reference path='types'/>
-///<reference path='providers/sg'/>
-///<reference path='providers/tw'/>
+///<reference path='providers/SG_NRIC'/>
+///<reference path='providers/TW_ID'/>
 
-const providers : any = {
+import { SingaporeNRICValidator } from "./providers/SG_NRIC";
+import { TaiwanIDValidator } from "./providers/TW_ID";
+
+const providerRegistry : any = {
     'SG': {
-        'NRIC': IDValidator.sg.validateSGIC
+        'NRIC': SingaporeNRICValidator
     },
     'TW': {
-        'ID': IDValidator.tw.validateTWID
+        'ID': TaiwanIDValidator
     }
 };
 
-export function getValidator(country: string, document: string) {
-    if (providers.hasOwnProperty(country)) {
-        const countryValidators = providers[country];
-        if (countryValidators.hasOwnProperty(document)) {
-            const validator = countryValidators[document];
-            return validator;
+export class IDValidators {
+    static getValidator(country: string, document: string) {
+        if (providerRegistry.hasOwnProperty(country)) {
+            const countryValidators = providerRegistry[country];
+            if (countryValidators.hasOwnProperty(document)) {
+                const validator = new countryValidators[document]();
+                return validator.validate;
+            }
         }
     }
 }

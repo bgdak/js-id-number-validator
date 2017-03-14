@@ -18,7 +18,11 @@ You can install IDValidators by
   
 * using in node.js
 
-  The library is available at NPM with name [`node-id-number-validator`](https://www.npmjs.com/package/node-id-number-validator).
+  The library is available at NPM with name [`id-number-validator`](https://www.npmjs.com/package/id-number-validator).
+  
+  ```
+  var IDValidators = require('id-number-validator');
+  ```
   
 * require as amd module
 

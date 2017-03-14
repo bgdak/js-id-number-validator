@@ -2,7 +2,7 @@
 
 import * as assert from 'assert';
 
-const IDValidators = require('../dist/node/IDValidators');
+const IDValidators = require('../dist/commonjs');
 
 describe('IDValidators', () => {
     beforeEach(function () {

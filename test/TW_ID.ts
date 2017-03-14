@@ -2,12 +2,12 @@
 
 import * as assert from 'assert';
 
-const IDValidators = require('../dist/node/IDValidators');
+const IDValidators = require('../dist/commonjs');
 
-describe('Singapore (SG)', () => {
+describe('Taiwan (TW)', () => {
     const validator = IDValidators.getValidator('TW', 'ID');
 
-    describe('NRIC / FIN', () => {
+    describe('ID', () => {
         it('should return a validator.', () => {
             assert.equal(typeof validator, 'function');
         });

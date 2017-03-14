@@ -116,8 +116,8 @@ var IDValidator;
     })(tw = IDValidator.tw || (IDValidator.tw = {}));
 })(IDValidator || (IDValidator = {}));
 ///<reference path='types'/>
-///<reference path='providers/sg'/>
-///<reference path='providers/tw'/>
+///<reference path='providerRegistry/sg'/>
+///<reference path='providerRegistry/tw'/>
 define("IDValidators", ["require", "exports"], function (require, exports) {
     "use strict";
     var providers = {
