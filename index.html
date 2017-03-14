@@ -18,15 +18,33 @@
 
 <script src="dist/bin/IDValidators.js"></script>
 
+<h3>Tanwan ID Validator 身份證字號驗證</h3>
+
+<input id="tw-id">
+
+<input onclick="validateTwId()" type="button" value="Validate!">
+
+<script src="dist/bin/IDValidators.js"></script>
+
 <script>
-    function validateSgNric() {
-        var validator = IDValidators.getValidator('SG', 'NRIC');
-        var output = validator(document.getElementById("sg-nric").value);
+    function displayOutput(output) {
         if (output.success) {
             alert("Success.")
         } else {
             alert("Error: " + output.reason);
         }
+    }
+
+    function validateSgNric() {
+        var validator = IDValidators.getValidator('SG', 'NRIC');
+        var output = validator(document.getElementById("sg-nric").value);
+        displayOutput(output)
+    }
+
+    function validateTwId() {
+        var validator = IDValidators.getValidator('TW', 'ID');
+        var output = validator(document.getElementById("tw-id").value);
+        displayOutput(output)
     }
 </script>
 </body>
