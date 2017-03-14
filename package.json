@@ -1,6 +1,6 @@
 {
   "name": "id-number-validator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JavaScript ID Number Validator",
   "main": "./dist/commonjs/index.js",
   "types": "./dist/commonjs/index.d.ts",

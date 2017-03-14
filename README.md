@@ -16,7 +16,7 @@ You can install IDValidators by
 
   `<script src="dist/bin/IDValidators.js"></script>`
   
-* using in node.js
+* using in node.js or webpack
 
   The library is available at NPM with name [`id-number-validator`](https://www.npmjs.com/package/id-number-validator).
   
@@ -24,11 +24,6 @@ You can install IDValidators by
   var IDValidators = require('id-number-validator');
   ```
   
-* require as amd module
-
-  `const IDValidators = require('../dist/amd/IDValidators');`
-  
-
 Step 2, get a validator.
 
 ```javascript
