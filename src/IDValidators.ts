@@ -1,13 +1,22 @@
 ///<reference path='types'/>
-///<reference path='sg'/>
-///<reference path='tw'/>
+///<reference path='providers/sg'/>
+///<reference path='providers/tw'/>
 
-import validateSGIC = IDValidator.sg.validateSGIC;
-import validateTWID = IDValidator.tw.validateTWID;
+const providers = {
+    'SG': {
+        'NRIC': IDValidator.sg.validateSGIC
+    },
+    'TW': {
+        'ID': IDValidator.tw.validateTWID
+    }
+};
+
 export function getValidator(country: string, document: string) {
-    if (country == 'SG') {
-        return validateSGIC;
-    } else if (country == 'TW') {
-        return validateTWID;
+    if (providers.hasOwnProperty(country)) {
+        const countryValidators = providers[country];
+        if (countryValidators.hasOwnProperty(document)) {
+            const validator = countryValidators[document];
+            return validator;
+        }
     }
 }

@@ -60,6 +60,19 @@ To build: `npm run build`
 
 To test: `npm test`
 
+### Add a new validator
+
+Step 1: Write the validator in TypeScript in the directory `src/providers/<name>.ts`. 
+The validator shall be a function returning a `ValidateResult`.
+
+Step 2: Register the validator in `src/IDValidators.ts`
+
+Step 3: Write test cases at `test/<name.ts>`.
+
+Step 4: Send a pull request to this repository.
+
+Thank you for the contributions.
+
 ## Bonus
 
 We have a very good [wiki](https://github.com/imdreamrunner/js-id-number-validator/wiki)

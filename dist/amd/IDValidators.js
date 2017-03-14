@@ -1,4 +1,4 @@
-///<reference path='types.ts'/>
+///<reference path='../types.ts'/>
 var IDValidator;
 (function (IDValidator) {
     var sg;
@@ -53,7 +53,7 @@ var IDValidator;
         sg.validateSGIC = validateSGIC;
     })(sg = IDValidator.sg || (IDValidator.sg = {}));
 })(IDValidator || (IDValidator = {}));
-///<reference path='types.ts'/>
+///<reference path='../types.ts'/>
 var IDValidator;
 (function (IDValidator) {
     var tw;
@@ -116,18 +116,25 @@ var IDValidator;
     })(tw = IDValidator.tw || (IDValidator.tw = {}));
 })(IDValidator || (IDValidator = {}));
 ///<reference path='types'/>
-///<reference path='sg'/>
-///<reference path='tw'/>
+///<reference path='providers/sg'/>
+///<reference path='providers/tw'/>
 define("IDValidators", ["require", "exports"], function (require, exports) {
     "use strict";
-    var validateSGIC = IDValidator.sg.validateSGIC;
-    var validateTWID = IDValidator.tw.validateTWID;
-    function getValidator(country, document) {
-        if (country == 'SG') {
-            return validateSGIC;
+    var providers = {
+        'SG': {
+            'NRIC': IDValidator.sg.validateSGIC
+        },
+        'TW': {
+            'ID': IDValidator.tw.validateTWID
         }
-        else if (country == 'TW') {
-            return validateTWID;
+    };
+    function getValidator(country, document) {
+        if (providers.hasOwnProperty(country)) {
+            var countryValidators = providers[country];
+            if (countryValidators.hasOwnProperty(document)) {
+                var validator = countryValidators[document];
+                return validator;
+            }
         }
     }
     exports.getValidator = getValidator;

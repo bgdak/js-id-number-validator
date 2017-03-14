@@ -5,6 +5,7 @@ var amdclean = require("gulp-amdclean");
 var webserver = require("gulp-webserver");
 
 gulp.task("build", function () {
+    // Build AMD library.
     var tsProject = ts.createProject("tsconfig.json", {
         module: "amd",
         outFile: "IDValidators.js"
@@ -17,6 +18,7 @@ gulp.task("build", function () {
 });
 
 gulp.task("build-plain", ["build"], function () {
+    // Build library for browser.
     return gulp
         .src(["dist/amd/IDValidators.js"])
         .pipe(amdclean.gulp({
@@ -32,6 +34,7 @@ gulp.task("build-plain", ["build"], function () {
 });
 
 gulp.task("build-node", ["build"], function () {
+    // Build library for node.
     return gulp
         .src(["dist/amd/IDValidators.js"])
         .pipe(amdclean.gulp({

@@ -11,6 +11,5 @@ declare namespace IDValidator.tw {
     function validateTWID(ic: string): ValidateResult;
 }
 declare module "IDValidators" {
-    import validateSGIC = IDValidator.sg.validateSGIC;
-    export function getValidator(country: string, document: string): typeof validateSGIC;
+    export function getValidator(country: string, document: string): any;
 }

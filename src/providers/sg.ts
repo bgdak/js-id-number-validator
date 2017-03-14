@@ -1,4 +1,4 @@
-///<reference path='types.ts'/>
+///<reference path='../types.ts'/>
 
 namespace IDValidator.sg {
     function validateNRIC(str: string) {
