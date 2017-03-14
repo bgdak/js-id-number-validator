@@ -22,8 +22,17 @@ You can install IDValidators by
 
   The library is available at NPM with name [`id-number-validator`](https://www.npmjs.com/package/id-number-validator).
   
+  You can import it via require.
+  
+  ```javascript
+  const IDValidators = require('id-number-validator').default;
   ```
-  var IDValidators = require('id-number-validator');
+  
+  Or in ES6 style.
+  
+  
+  ```javascript
+  import IDValidators from 'id-number-validator';
   ```
   
 Step 2, get a validator.

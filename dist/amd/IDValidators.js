@@ -56,7 +56,8 @@ define("providers/SG_NRIC", ["require", "exports"], function (require, exports) 
         };
         return SingaporeNRICValidator;
     }());
-    exports.SingaporeNRICValidator = SingaporeNRICValidator;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = SingaporeNRICValidator;
 });
 ///<reference path='../types.ts'/>
 define("providers/TW_ID", ["require", "exports"], function (require, exports) {
@@ -120,7 +121,8 @@ define("providers/TW_ID", ["require", "exports"], function (require, exports) {
         };
         return TaiwanIDValidator;
     }());
-    exports.TaiwanIDValidator = TaiwanIDValidator;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = TaiwanIDValidator;
 });
 ///<reference path='types'/>
 ///<reference path='providers/SG_NRIC'/>
@@ -129,10 +131,10 @@ define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW
     "use strict";
     var providerRegistry = {
         'SG': {
-            'NRIC': SG_NRIC_1.SingaporeNRICValidator
+            'NRIC': SG_NRIC_1.default
         },
         'TW': {
-            'ID': TW_ID_1.TaiwanIDValidator
+            'ID': TW_ID_1.default
         }
     };
     var IDValidators = (function () {
@@ -153,5 +155,6 @@ define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW
 });
 define("index", ["require", "exports", "IDValidators"], function (require, exports, IDValidators_1) {
     "use strict";
-    module.exports = IDValidators_1.IDValidators;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = IDValidators_1.IDValidators;
 });

@@ -79,7 +79,8 @@ providers_SG_NRIC = function (exports) {
     };
     return SingaporeNRICValidator;
   }();
-  exports.SingaporeNRICValidator = SingaporeNRICValidator;
+  Object.defineProperty(exports, '__esModule', { value: true });
+  exports.default = SingaporeNRICValidator;
   return exports;
 }(providers_SG_NRIC);
 providers_TW_ID = function (exports) {
@@ -139,13 +140,14 @@ providers_TW_ID = function (exports) {
     };
     return TaiwanIDValidator;
   }();
-  exports.TaiwanIDValidator = TaiwanIDValidator;
+  Object.defineProperty(exports, '__esModule', { value: true });
+  exports.default = TaiwanIDValidator;
   return exports;
 }(providers_TW_ID);
 IDValidators = function (exports, SG_NRIC_1, TW_ID_1) {
   var providerRegistry = {
-    'SG': { 'NRIC': SG_NRIC_1.SingaporeNRICValidator },
-    'TW': { 'ID': TW_ID_1.TaiwanIDValidator }
+    'SG': { 'NRIC': SG_NRIC_1.default },
+    'TW': { 'ID': TW_ID_1.default }
   };
   var IDValidators = function () {
     function IDValidators() {
@@ -165,7 +167,8 @@ IDValidators = function (exports, SG_NRIC_1, TW_ID_1) {
   return exports;
 }(IDValidators, providers_SG_NRIC, providers_TW_ID);
 index = function (exports, IDValidators_1) {
-  exports = IDValidators_1.IDValidators;
+  Object.defineProperty(exports, '__esModule', { value: true });
+  exports.default = IDValidators_1.IDValidators;
   return exports;
 }(index, IDValidators);
-global.IDValidators=IDValidators;}(window));
+global.IDValidators=index.default;}(window));

@@ -1,3 +1,4 @@
 "use strict";
 var IDValidators_1 = require("./IDValidators");
-module.exports = IDValidators_1.IDValidators;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = IDValidators_1.IDValidators;

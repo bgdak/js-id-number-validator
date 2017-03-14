@@ -6,10 +6,10 @@ var SG_NRIC_1 = require("./providers/SG_NRIC");
 var TW_ID_1 = require("./providers/TW_ID");
 var providerRegistry = {
     'SG': {
-        'NRIC': SG_NRIC_1.SingaporeNRICValidator
+        'NRIC': SG_NRIC_1.default
     },
     'TW': {
-        'ID': TW_ID_1.TaiwanIDValidator
+        'ID': TW_ID_1.default
     }
 };
 var IDValidators = (function () {

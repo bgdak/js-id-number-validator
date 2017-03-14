@@ -39,7 +39,7 @@ gulp.task("build-plain", ["build-amd"], function () {
                 // This string is prepended to the file
                 start: ";(function(global) {\n",
                 // This string is appended to the file
-                end: "\nglobal.IDValidators=IDValidators;}(window));"
+                end: "\nglobal.IDValidators=index.default;}(window));"
             }
         }))
         .pipe(gulp.dest("dist/bin"));

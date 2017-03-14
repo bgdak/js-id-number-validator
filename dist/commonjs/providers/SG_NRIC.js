@@ -52,4 +52,5 @@ var SingaporeNRICValidator = (function () {
     };
     return SingaporeNRICValidator;
 }());
-exports.SingaporeNRICValidator = SingaporeNRICValidator;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = SingaporeNRICValidator;

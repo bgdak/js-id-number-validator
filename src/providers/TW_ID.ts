@@ -2,7 +2,7 @@
 
 import {Validator, ValidateResult} from "../types";
 
-export class TaiwanIDValidator implements Validator {
+export default class TaiwanIDValidator implements Validator {
     static getTWIDFirstCode(c: string) {
         if (c == 'I') {
             return 34;

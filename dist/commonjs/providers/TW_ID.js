@@ -59,4 +59,5 @@ var TaiwanIDValidator = (function () {
     };
     return TaiwanIDValidator;
 }());
-exports.TaiwanIDValidator = TaiwanIDValidator;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = TaiwanIDValidator;

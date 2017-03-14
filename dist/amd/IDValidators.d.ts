@@ -9,14 +9,14 @@ declare module "types" {
 }
 declare module "providers/SG_NRIC" {
     import { Validator, ValidateResult } from "types";
-    export class SingaporeNRICValidator implements Validator {
+    export default class SingaporeNRICValidator implements Validator {
         static validateNRIC(str: string): string;
         validate(id: string): ValidateResult;
     }
 }
 declare module "providers/TW_ID" {
     import { Validator, ValidateResult } from "types";
-    export class TaiwanIDValidator implements Validator {
+    export default class TaiwanIDValidator implements Validator {
         static getTWIDFirstCode(c: string): number;
         validate(id: string): ValidateResult;
     }
@@ -27,4 +27,6 @@ declare module "IDValidators" {
     }
 }
 declare module "index" {
+    import { IDValidators } from "IDValidators";
+    export default IDValidators;
 }

@@ -2,7 +2,7 @@
 
 import {Validator, ValidateResult} from "../types";
 
-export class SingaporeNRICValidator implements Validator {
+export default class SingaporeNRICValidator implements Validator {
 
     static validateNRIC(str: string) {
         // Modified from https://gist.github.com/eddiemoore/7131781

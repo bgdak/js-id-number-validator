@@ -2,8 +2,8 @@
 ///<reference path='providers/SG_NRIC'/>
 ///<reference path='providers/TW_ID'/>
 
-import { SingaporeNRICValidator } from "./providers/SG_NRIC";
-import { TaiwanIDValidator } from "./providers/TW_ID";
+import SingaporeNRICValidator from "./providers/SG_NRIC";
+import TaiwanIDValidator from "./providers/TW_ID";
 
 const providerRegistry : any = {
     'SG': {

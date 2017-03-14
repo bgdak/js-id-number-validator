@@ -1,8 +1,7 @@
 ///<reference path='../dist/amd/IDValidators'/>
 
 import * as assert from 'assert';
-
-const IDValidators = require('../dist/commonjs/');
+import IDValidators from '../dist/commonjs';
 
 describe('Singapore (SG)', () => {
     const validator = IDValidators.getValidator('SG', 'NRIC');

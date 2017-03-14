@@ -1,3 +1,3 @@
 import { IDValidators } from "./IDValidators";
 
-module.exports = IDValidators;
+export default IDValidators;
