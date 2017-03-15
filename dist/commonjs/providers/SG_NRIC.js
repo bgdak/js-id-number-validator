@@ -1,5 +1,6 @@
 ///<reference path='../types.ts'/>
 "use strict";
+var types_1 = require("../types");
 var SingaporeNRICValidator = (function () {
     function SingaporeNRICValidator() {
     }
@@ -7,9 +8,9 @@ var SingaporeNRICValidator = (function () {
         // Modified from https://gist.github.com/eddiemoore/7131781
         // Originally base on Based on http://www.samliew.com/icval/
         if (!str || str.length != 9)
-            return 'error_length';
+            return types_1.ErrorCode.error_length;
         if (!/^[SFGT]\d{7}[A-Z]$/i.test(str))
-            return 'error_format';
+            return types_1.ErrorCode.error_format;
         str = str.toUpperCase();
         var icChar = [];
         var icNumber = [];
@@ -40,7 +41,7 @@ var SingaporeNRICValidator = (function () {
             theAlpha = fg[temp];
         }
         if (icChar[8] !== theAlpha) {
-            return 'error_checksum';
+            return types_1.ErrorCode.error_checksum;
         }
     };
     SingaporeNRICValidator.prototype.validate = function (id) {

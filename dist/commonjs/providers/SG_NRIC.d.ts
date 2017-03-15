@@ -1,6 +1,6 @@
 /// <reference path="../types.d.ts" />
-import { Validator, ValidateResult } from "../types";
-export default class SingaporeNRICValidator implements Validator {
-    static validateNRIC(str: string): string;
-    validate(id: string): ValidateResult;
+import { InternalValidator, InternalValidateResult, ErrorCode } from "../types";
+export default class SingaporeNRICValidator implements InternalValidator {
+    static validateNRIC(str: string): ErrorCode;
+    validate(id: string): InternalValidateResult;
 }

@@ -1,18 +1,18 @@
 ///<reference path='../types.ts'/>
 
-import {Validator, ValidateResult} from "../types";
+import {InternalValidator, InternalValidateResult, ErrorCode} from "../types";
 
-export default class SingaporeNRICValidator implements Validator {
+export default class SingaporeNRICValidator implements InternalValidator {
 
-    static validateNRIC(str: string) {
+    static validateNRIC(str: string) : ErrorCode {
         // Modified from https://gist.github.com/eddiemoore/7131781
         // Originally base on Based on http://www.samliew.com/icval/
 
         if (!str || str.length != 9)
-            return 'error_length';
+            return ErrorCode.error_length;
 
         if (!/^[SFGT]\d{7}[A-Z]$/i.test(str))
-            return 'error_format';
+            return ErrorCode.error_format;
 
         str = str.toUpperCase();
 
@@ -51,11 +51,11 @@ export default class SingaporeNRICValidator implements Validator {
         }
 
         if (icChar[8] !== theAlpha) {
-            return 'error_checksum';
+            return ErrorCode.error_checksum;
         }
     }
 
-    validate(id:string):ValidateResult {
+    validate(id:string):InternalValidateResult {
         const error = SingaporeNRICValidator.validateNRIC(id);
         return {
             success: !error,

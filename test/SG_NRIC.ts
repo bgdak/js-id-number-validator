@@ -40,8 +40,8 @@ describe('Singapore (SG)', () => {
                 'i am fantastic'
             ];
             cases.forEach((ic) => {
-                assert.equal(validator(ic).success, false);
-                assert.equal(validator(ic).reason, 'error_length');
+                assert.equal(validator(<string>ic).success, false);
+                assert.equal(validator(<string>ic).reason, 'error_length');
             })
         });
 

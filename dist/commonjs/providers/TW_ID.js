@@ -1,5 +1,6 @@
 ///<reference path='../types.ts'/>
 "use strict";
+var types_1 = require("../types");
 var TaiwanIDValidator = (function () {
     function TaiwanIDValidator() {
     }
@@ -24,13 +25,13 @@ var TaiwanIDValidator = (function () {
         if (!id || id.length !== 10) {
             return {
                 success: false,
-                reason: 'error_length'
+                reason: types_1.ErrorCode.error_length
             };
         }
         if (!/^[A-Z]\d{9}$/i.test(id)) {
             return {
                 success: false,
-                reason: 'error_format'
+                reason: types_1.ErrorCode.error_format
             };
         }
         var start = id.charAt(0);
@@ -53,7 +54,7 @@ var TaiwanIDValidator = (function () {
         else {
             return {
                 success: false,
-                reason: 'error_checksum'
+                reason: types_1.ErrorCode.error_checksum
             };
         }
     };

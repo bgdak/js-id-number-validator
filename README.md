@@ -73,7 +73,7 @@ To test: `npm test`
 ### Add a new validator
 
 Step 1: Write the validator in TypeScript in the directory `src/providers/<name>.ts`. 
-The validator shall be a function returning a `ValidateResult`.
+The validator shall be a function returning a `InternalValidateResult`.
 
 Step 2: Register the validator in `src/IDValidators.ts`
 

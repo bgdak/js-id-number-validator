@@ -1,8 +1,8 @@
 ///<reference path='../types.ts'/>
 
-import {Validator, ValidateResult} from "../types";
+import {InternalValidator, InternalValidateResult, ErrorCode} from "../types";
 
-export default class TaiwanIDValidator implements Validator {
+export default class TaiwanIDValidator implements InternalValidator {
     static getTWIDFirstCode(c: string) {
         if (c == 'I') {
             return 34;
@@ -21,18 +21,18 @@ export default class TaiwanIDValidator implements Validator {
         }
     }
 
-    validate(id:string):ValidateResult {
+    validate(id:string):InternalValidateResult {
         if (!id || id.length !== 10) {
             return {
                 success: false,
-                reason: 'error_length'
+                reason: ErrorCode.error_length
             };
         }
 
         if (!/^[A-Z]\d{9}$/i.test(id)) {
             return {
                 success: false,
-                reason: 'error_format'
+                reason: ErrorCode.error_format
             };
         }
 
@@ -57,7 +57,7 @@ export default class TaiwanIDValidator implements Validator {
         } else {
             return {
                 success: false,
-                reason: 'error_checksum'
+                reason: ErrorCode.error_checksum
             };
         }
     }
