@@ -2,7 +2,7 @@ import { IDValidators } from "./IDValidators";
 
 export default IDValidators;
 
-// To support both require and RS6 import default.
+// To support both require and ES6 import default.
 
 let validatorCopy : any = IDValidators;
 
