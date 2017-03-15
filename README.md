@@ -16,7 +16,12 @@ You can install IDValidators by
 
 * directly import in browser
 
-  `<script src="dist/bin/IDValidators.js"></script>`
+  ```html
+  <script src="dist/bin/IDValidators.js"></script>
+  <!-- Please edit the URL above. -->
+  ```
+  
+  [Download latest build.](https://raw.githubusercontent.com/imdreamrunner/js-id-number-validator/master/dist/bin/IDValidators.js)
   
 * using in node.js or webpack
 
