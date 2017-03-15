@@ -2,9 +2,7 @@
 var IDValidators_1 = require("./IDValidators");
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = IDValidators_1.IDValidators;
-var validatorCopy = IDValidators_1.IDValidators;
-var oldExport = module.exports;
-for (var attr in oldExport) {
-    validatorCopy[attr] = oldExport[attr];
+// To support both require and ES6 import default.
+for (var attr in IDValidators_1.IDValidators) {
+    exports[attr] = IDValidators_1.IDValidators[attr];
 }
-module.exports = validatorCopy;
