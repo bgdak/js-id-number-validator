@@ -26,7 +26,8 @@ describe('China ID Number 居民身份证号码', () => {
         'S0980D',
         'S0980343534D',
         '4r32',
-        'i am fantastic'
+        'i am fantastic',
+        '999999199304070016'
     ].forEach((ic) => {
         it(`should report ${ic} as error_format.`, () => {
             assert.equal(validator(ic).success, false, ic + " " + JSON.stringify(validator(ic)));
@@ -44,16 +45,6 @@ describe('China ID Number 居民身份证号码', () => {
             const ic : string = <string><any>icOriginal;
             assert.equal(validator(ic).success, false, ic + " " + JSON.stringify(validator(ic)));
             assert.equal(validator(ic).reason, 'error_input_variable', ic + " " + JSON.stringify(validator(ic)));
-        });
-    });
-
-
-    [
-        '999999199304070016'
-    ].forEach((ic) => {
-        it(`should report ${ic} as error_format.`, () => {
-            assert.equal(validator(ic).success, false);
-            assert.equal(validator(ic).reason, 'error_format');
         });
     });
 
