@@ -5,45 +5,50 @@
 <body>
 <h1>ID Number Validator</h1>
 <p>
-    This ID Number Validator is powered by <a href="https://github.com/imdreamrunner/js-id-number-validator">js-id-number-validator</a>.
+    This ID Number Validator is powered by
+    <a href="https://github.com/imdreamrunner/js-id-number-validator">js-id-number-validator</a>.
+    It's a collection of identification number validators with uniform interfaces for JavaScript,
+    available for using in browsers and installed via NPM.
 </p>
 
 <h2>Validators</h2>
+<p>Please do not block the alerts from browsers.</p>
 
 <h3>Singapore NRIC Validator</h3>
-
 <input id="sg-nric">
+<input onclick="validate('SG', 'NRIC', 'sg-nric')" type="button" value="Validate!">
 
-<input onclick="validateSgNric()" type="button" value="Validate!">
-
-<script src="dist/bin/IDValidators.js"></script>
-
-<h3>Tanwan ID Validator 身份證字號驗證</h3>
-
+<h3>Tanwan ID Validator 台灣身份證字號驗證</h3>
 <input id="tw-id">
+<input onclick="validate('TW', 'ID', 'tw-id')" type="button" value="Validate!">
 
-<input onclick="validateTwId()" type="button" value="Validate!">
+<h3>Chinese ID Validator 中国大陆公民身份号(居民身份证号码)</h3>
+<input id="cn-id">
+<input onclick="validate('CN', 'ID', 'cn-id')" type="button" value="Validate!">
+
+<p>
+    Author: <a href="http://blog.dreamrunner.space/about.html">Ivor</a>
+    and <a href="https://github.com/imdreamrunner/js-id-number-validator/graphs/contributors">GitHub contributors</a>.
+</p>
 
 <script src="dist/bin/IDValidators.js"></script>
 
 <script>
     function displayOutput(output) {
         if (output.success) {
-            alert("Success.")
+            var message = "Success.";
+            if (output.extra) {
+                message += '\n' + JSON.stringify(output.extra);
+            }
+            alert(message)
         } else {
             alert("Error: " + output.reason);
         }
     }
 
-    function validateSgNric() {
-        var validator = IDValidators.getValidator('SG', 'NRIC');
-        var output = validator(document.getElementById("sg-nric").value);
-        displayOutput(output)
-    }
-
-    function validateTwId() {
-        var validator = IDValidators.getValidator('TW', 'ID');
-        var output = validator(document.getElementById("tw-id").value);
+    function validate(country, type, input) {
+        var validator = IDValidators.getValidator(country, type);
+        var output = validator(document.getElementById(input).value);
         displayOutput(output)
     }
 </script>
