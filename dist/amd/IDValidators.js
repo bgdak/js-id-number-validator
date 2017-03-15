@@ -281,9 +281,12 @@ define("IDValidators", ["require", "exports", "types", "providers/SG_NRIC", "pro
 });
 define("index", ["require", "exports", "IDValidators"], function (require, exports, IDValidators_1) {
     "use strict";
-    module.exports = IDValidators_1.IDValidators;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = IDValidators_1.IDValidators;
+    // To support both require and ES6 import default.
+    for (var attr in IDValidators_1.IDValidators) {
+        exports[attr] = IDValidators_1.IDValidators[attr];
+    }
 });
 ///<reference path='../types.ts'/>
 define("providers/sample", ["require", "exports", "types"], function (require, exports, types_5) {
