@@ -9,7 +9,7 @@ describe('IDValidators', () => {
 
     describe('#getValidator', () => {
         it('should return a function if import with require.', () => {
-            const IDValidatorsLocal = require('../dist/commonjs').default;
+            const IDValidatorsLocal = require('../dist/commonjs');
             const validator = IDValidatorsLocal.getValidator('SG', 'NRIC');
             assert.equal(typeof validator, 'function');
         });

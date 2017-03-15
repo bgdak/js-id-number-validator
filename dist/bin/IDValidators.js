@@ -316,6 +316,7 @@ IDValidators = function (exports, types_4, SG_NRIC_1, TW_ID_1, CN_ID_1) {
   return exports;
 }(IDValidators, types, providers_SG_NRIC, providers_TW_ID, providers_CN_ID);
 index = function (exports, IDValidators_1) {
+  exports = IDValidators_1.IDValidators;
   Object.defineProperty(exports, '__esModule', { value: true });
   exports.default = IDValidators_1.IDValidators;
   return exports;

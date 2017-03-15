@@ -30,7 +30,7 @@ You can install IDValidators by
   You can import it via require.
   
   ```javascript
-  const IDValidators = require('id-number-validator').default;
+  const IDValidators = require('id-number-validator');
   ```
   
   Or in ES6 style.

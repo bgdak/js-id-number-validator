@@ -281,6 +281,7 @@ define("IDValidators", ["require", "exports", "types", "providers/SG_NRIC", "pro
 });
 define("index", ["require", "exports", "IDValidators"], function (require, exports, IDValidators_1) {
     "use strict";
+    module.exports = IDValidators_1.IDValidators;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = IDValidators_1.IDValidators;
 });
