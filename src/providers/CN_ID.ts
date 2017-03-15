@@ -69,14 +69,18 @@ export default class ChinaIDValidator implements InternalValidator {
             return {
                 success: false,
                 reason: ErrorCode.error_format,
-                detail: "非法地区"
+                extra: {
+                    error_detail: "error_location"
+                }
             }
         }
         if (time >= currentTime || birthday !== newBirthday) {
             return {
                 success: false,
                 reason: ErrorCode.error_format,
-                detail: "非法生日"
+                extra: {
+                    error_detail: "error_birthday"
+                }
             }
         }
         for (i = 0; i < 17; i++) {
@@ -91,9 +95,11 @@ export default class ChinaIDValidator implements InternalValidator {
         }
         return {
             success: true,
-            city: city[idNumber.substr(0, 2)],
-            birthday: birthday,
-            gender: parseInt(idNumber.substr(16, 1)) % 2 ? "Male" : "Female"
+            extra: {
+                city: city[idNumber.substr(0, 2)],
+                birthday: birthday,
+                gender: parseInt(idNumber.substr(16, 1)) % 2 ? "Male" : "Female"
+            }
         }
     }
 

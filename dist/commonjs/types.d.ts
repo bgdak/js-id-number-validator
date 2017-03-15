@@ -4,15 +4,18 @@ export interface InternalValidator {
 export interface Validator {
     (id: string): ValidateResult;
 }
+export interface ExtraData {
+    [key: string]: any;
+}
 export interface InternalValidateResult {
     success: boolean;
     reason?: ErrorCode;
-    [key: string]: any;
+    extra?: ExtraData;
 }
 export interface ValidateResult {
     success: boolean;
     reason?: string;
-    [key: string]: any;
+    extra?: ExtraData;
 }
 export declare enum ErrorCode {
     error_input_variable = 0,

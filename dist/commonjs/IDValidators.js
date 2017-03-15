@@ -30,11 +30,8 @@ var IDValidators = (function () {
                     var output = { success: result.success };
                     if (result.hasOwnProperty("reason"))
                         output.reason = types_1.ErrorCode[result.reason];
-                    for (var attr in result) {
-                        if (result.hasOwnProperty(attr) && attr != 'success' && attr != "reason") {
-                            output[attr] = result[attr];
-                        }
-                    }
+                    if (result.hasOwnProperty("extra"))
+                        output.extra = result.extra;
                     return output;
                 };
             }

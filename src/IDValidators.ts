@@ -2,8 +2,7 @@
 ///<reference path='providers/SG_NRIC'/>
 ///<reference path='providers/TW_ID'/>
 
-import {ValidateResult} from "../dist/commonjs/types";
-import {Validator, InternalValidateResult, ErrorCode} from "./types";
+import {Validator, InternalValidateResult, ErrorCode, ValidateResult} from "./types";
 
 import SingaporeNRICValidator from "./providers/SG_NRIC";
 import TaiwanIDValidator from "./providers/TW_ID";
@@ -32,11 +31,7 @@ export class IDValidators {
                     const result:InternalValidateResult = validator.validate(id);
                     const output:ValidateResult = { success: result.success};
                     if (result.hasOwnProperty("reason")) output.reason = <string>ErrorCode[<number>result.reason];
-                    for (let attr in result) {
-                        if (result.hasOwnProperty(attr) && attr != 'success' && attr != "reason") {
-                            (<any>output)[attr] = result[attr];
-                        }
-                    }
+                    if (result.hasOwnProperty("extra")) output.extra = result.extra;
                     return output;
                 };
             }

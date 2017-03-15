@@ -1,8 +1,15 @@
 define("types", ["require", "exports"], function (require, exports) {
     "use strict";
+    (function (ErrorCode) {
+        ErrorCode[ErrorCode["error_input_variable"] = 0] = "error_input_variable";
+        ErrorCode[ErrorCode["error_checksum"] = 1] = "error_checksum";
+        ErrorCode[ErrorCode["error_length"] = 2] = "error_length";
+        ErrorCode[ErrorCode["error_format"] = 3] = "error_format";
+    })(exports.ErrorCode || (exports.ErrorCode = {}));
+    var ErrorCode = exports.ErrorCode;
 });
 ///<reference path='../types.ts'/>
-define("providers/SG_NRIC", ["require", "exports"], function (require, exports) {
+define("providers/SG_NRIC", ["require", "exports", "types"], function (require, exports, types_1) {
     "use strict";
     var SingaporeNRICValidator = (function () {
         function SingaporeNRICValidator() {
@@ -11,9 +18,9 @@ define("providers/SG_NRIC", ["require", "exports"], function (require, exports) 
             // Modified from https://gist.github.com/eddiemoore/7131781
             // Originally base on Based on http://www.samliew.com/icval/
             if (!str || str.length != 9)
-                return 'error_length';
+                return types_1.ErrorCode.error_length;
             if (!/^[SFGT]\d{7}[A-Z]$/i.test(str))
-                return 'error_format';
+                return types_1.ErrorCode.error_format;
             str = str.toUpperCase();
             var icChar = [];
             var icNumber = [];
@@ -44,7 +51,7 @@ define("providers/SG_NRIC", ["require", "exports"], function (require, exports) 
                 theAlpha = fg[temp];
             }
             if (icChar[8] !== theAlpha) {
-                return 'error_checksum';
+                return types_1.ErrorCode.error_checksum;
             }
         };
         SingaporeNRICValidator.prototype.validate = function (id) {
@@ -60,7 +67,7 @@ define("providers/SG_NRIC", ["require", "exports"], function (require, exports) 
     exports.default = SingaporeNRICValidator;
 });
 ///<reference path='../types.ts'/>
-define("providers/TW_ID", ["require", "exports"], function (require, exports) {
+define("providers/TW_ID", ["require", "exports", "types"], function (require, exports, types_2) {
     "use strict";
     var TaiwanIDValidator = (function () {
         function TaiwanIDValidator() {
@@ -86,13 +93,13 @@ define("providers/TW_ID", ["require", "exports"], function (require, exports) {
             if (!id || id.length !== 10) {
                 return {
                     success: false,
-                    reason: 'error_length'
+                    reason: types_2.ErrorCode.error_length
                 };
             }
             if (!/^[A-Z]\d{9}$/i.test(id)) {
                 return {
                     success: false,
-                    reason: 'error_format'
+                    reason: types_2.ErrorCode.error_format
                 };
             }
             var start = id.charAt(0);
@@ -115,7 +122,7 @@ define("providers/TW_ID", ["require", "exports"], function (require, exports) {
             else {
                 return {
                     success: false,
-                    reason: 'error_checksum'
+                    reason: types_2.ErrorCode.error_checksum
                 };
             }
         };
@@ -124,10 +131,118 @@ define("providers/TW_ID", ["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = TaiwanIDValidator;
 });
+///<reference path='../types.ts'/>
+define("providers/CN_ID", ["require", "exports", "types"], function (require, exports, types_3) {
+    "use strict";
+    var ChinaIDValidator = (function () {
+        function ChinaIDValidator() {
+        }
+        ChinaIDValidator.prototype.validate = function (idNumber) {
+            // This Chinese ID validator only supports the 18 digit validation.
+            // Logic and code is copied from https://segmentfault.com/a/1190000004437362
+            if (typeof idNumber !== 'string') {
+                return {
+                    success: false,
+                    reason: types_3.ErrorCode.error_input_variable
+                };
+            }
+            var city = {
+                11: "北京",
+                12: "天津",
+                13: "河北",
+                14: "山西",
+                15: "内蒙古",
+                21: "辽宁",
+                22: "吉林",
+                23: "黑龙江 ",
+                31: "上海",
+                32: "江苏",
+                33: "浙江",
+                34: "安徽",
+                35: "福建",
+                36: "江西",
+                37: "山东",
+                41: "河南",
+                42: "湖北 ",
+                43: "湖南",
+                44: "广东",
+                45: "广西",
+                46: "海南",
+                50: "重庆",
+                51: "四川",
+                52: "贵州",
+                53: "云南",
+                54: "西藏 ",
+                61: "陕西",
+                62: "甘肃",
+                63: "青海",
+                64: "宁夏",
+                65: "新疆",
+                71: "台湾",
+                81: "香港",
+                82: "澳门",
+                91: "国外"
+            };
+            var birthday = idNumber.substr(6, 4) + '/' + Number(idNumber.substr(10, 2)) + '/' + Number(idNumber.substr(12, 2));
+            var d = new Date(birthday);
+            var newBirthday = d.getFullYear() + '/' + Number(d.getMonth() + 1) + '/' + Number(d.getDate());
+            var currentTime = new Date().getTime();
+            var time = d.getTime();
+            var arrInt = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+            var arrCh = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+            var sum = 0, i, residue;
+            if (!/^\d{17}(\d|x)$/i.test(idNumber)) {
+                return {
+                    success: false,
+                    reason: types_3.ErrorCode.error_format
+                };
+            }
+            if (city[idNumber.substr(0, 2)] === undefined) {
+                return {
+                    success: false,
+                    reason: types_3.ErrorCode.error_format,
+                    extra: {
+                        error_detail: "error_location"
+                    }
+                };
+            }
+            if (time >= currentTime || birthday !== newBirthday) {
+                return {
+                    success: false,
+                    reason: types_3.ErrorCode.error_format,
+                    extra: {
+                        error_detail: "error_birthday"
+                    }
+                };
+            }
+            for (i = 0; i < 17; i++) {
+                sum += parseInt(idNumber.substr(i, 1)) * arrInt[i];
+            }
+            residue = arrCh[sum % 11];
+            if (residue !== idNumber.substr(17, 1)) {
+                return {
+                    success: false,
+                    reason: types_3.ErrorCode.error_checksum
+                };
+            }
+            return {
+                success: true,
+                extra: {
+                    city: city[idNumber.substr(0, 2)],
+                    birthday: birthday,
+                    gender: parseInt(idNumber.substr(16, 1)) % 2 ? "Male" : "Female"
+                }
+            };
+        };
+        return ChinaIDValidator;
+    }());
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = ChinaIDValidator;
+});
 ///<reference path='types'/>
 ///<reference path='providers/SG_NRIC'/>
 ///<reference path='providers/TW_ID'/>
-define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW_ID"], function (require, exports, SG_NRIC_1, TW_ID_1) {
+define("IDValidators", ["require", "exports", "types", "providers/SG_NRIC", "providers/TW_ID", "providers/CN_ID"], function (require, exports, types_4, SG_NRIC_1, TW_ID_1, CN_ID_1) {
     "use strict";
     var providerRegistry = {
         'SG': {
@@ -135,6 +250,9 @@ define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW
         },
         'TW': {
             'ID': TW_ID_1.default
+        },
+        'CN': {
+            'ID': CN_ID_1.default
         }
     };
     var IDValidators = (function () {
@@ -144,8 +262,16 @@ define("IDValidators", ["require", "exports", "providers/SG_NRIC", "providers/TW
             if (providerRegistry.hasOwnProperty(country)) {
                 var countryValidators = providerRegistry[country];
                 if (countryValidators.hasOwnProperty(document)) {
-                    var validator = new countryValidators[document]();
-                    return validator.validate;
+                    var validator_1 = new countryValidators[document]();
+                    return function (id) {
+                        var result = validator_1.validate(id);
+                        var output = { success: result.success };
+                        if (result.hasOwnProperty("reason"))
+                            output.reason = types_4.ErrorCode[result.reason];
+                        if (result.hasOwnProperty("extra"))
+                            output.extra = result.extra;
+                        return output;
+                    };
                 }
             }
         };
@@ -157,4 +283,21 @@ define("index", ["require", "exports", "IDValidators"], function (require, expor
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = IDValidators_1.IDValidators;
+});
+///<reference path='../types.ts'/>
+define("providers/sample", ["require", "exports", "types"], function (require, exports, types_5) {
+    "use strict";
+    var SampleValidator = (function () {
+        function SampleValidator() {
+        }
+        SampleValidator.prototype.validate = function (id) {
+            return {
+                success: false,
+                reason: types_5.ErrorCode.error_checksum
+            };
+        };
+        return SampleValidator;
+    }());
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = SampleValidator;
 });
