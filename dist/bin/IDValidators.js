@@ -164,7 +164,7 @@ providers_CN_ID = function (exports, types_3) {
           reason: types_3.ErrorCode.error_input_variable
         };
       }
-      var city = {
+      var province = {
         11: '北京',
         12: '天津',
         13: '河北',
@@ -245,7 +245,7 @@ providers_CN_ID = function (exports, types_3) {
           reason: types_3.ErrorCode.error_format
         };
       }
-      if (city[idNumber.substr(0, 2)] === undefined) {
+      if (province[idNumber.substr(0, 2)] === undefined) {
         return {
           success: false,
           reason: types_3.ErrorCode.error_format,
@@ -272,7 +272,7 @@ providers_CN_ID = function (exports, types_3) {
       return {
         success: true,
         extra: {
-          city: city[idNumber.substr(0, 2)],
+          province: province[idNumber.substr(0, 2)],
           birthday: birthday,
           gender: parseInt(idNumber.substr(16, 1)) % 2 ? 'Male' : 'Female'
         }
