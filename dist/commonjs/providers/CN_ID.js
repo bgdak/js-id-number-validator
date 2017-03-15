@@ -5,6 +5,7 @@ var ChinaIDValidator = (function () {
     function ChinaIDValidator() {
     }
     ChinaIDValidator.prototype.validate = function (idNumber) {
+        // This Chinese ID validator only supports the 18 digit validation.
         // Logic and code is copied from https://segmentfault.com/a/1190000004437362
         if (typeof idNumber !== 'string') {
             return {
@@ -81,7 +82,7 @@ var ChinaIDValidator = (function () {
             sum += parseInt(idNumber.substr(i, 1)) * arrInt[i];
         }
         residue = arrCh[sum % 11];
-        if (residue !== parseInt(idNumber.substr(17, 1))) {
+        if (residue !== idNumber.substr(17, 1)) {
             return {
                 success: false,
                 reason: types_1.ErrorCode.error_checksum

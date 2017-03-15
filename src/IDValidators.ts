@@ -2,10 +2,12 @@
 ///<reference path='providers/SG_NRIC'/>
 ///<reference path='providers/TW_ID'/>
 
+import {ValidateResult} from "../dist/commonjs/types";
+import {Validator, InternalValidateResult, ErrorCode} from "./types";
+
 import SingaporeNRICValidator from "./providers/SG_NRIC";
 import TaiwanIDValidator from "./providers/TW_ID";
-import {ValidateResult, InternalValidator} from "../dist/commonjs/types";
-import {Validator, InternalValidateResult, ErrorCode} from "./types";
+import ChinaIDValidator from "./providers/CN_ID";
 
 const providerRegistry : any = {
     'SG': {
@@ -13,6 +15,9 @@ const providerRegistry : any = {
     },
     'TW': {
         'ID': TaiwanIDValidator
+    },
+    'CN': {
+        'ID': ChinaIDValidator
     }
 };
 
@@ -26,7 +31,7 @@ export class IDValidators {
                 return <Validator> function (id) {
                     const result:InternalValidateResult = validator.validate(id);
                     const output:ValidateResult = { success: result.success};
-                    if (result.hasOwnProperty("reason") && result.reason) output.reason = <string>ErrorCode[<number>result.reason];
+                    if (result.hasOwnProperty("reason")) output.reason = <string>ErrorCode[<number>result.reason];
                     for (let attr in result) {
                         if (result.hasOwnProperty(attr) && attr != 'success' && attr != "reason") {
                             (<any>output)[attr] = result[attr];

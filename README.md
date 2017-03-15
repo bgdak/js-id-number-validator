@@ -62,6 +62,7 @@ And the result is in format:
 |:-------:|:--------:|
 | SG (Singapore) | NRIC |
 | TW (Taiwan) | ID (身份證字號) |
+| CN (China) | ID (居民身份证号码) |
 
 
 ## Development

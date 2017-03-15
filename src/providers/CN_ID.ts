@@ -5,6 +5,7 @@ import {InternalValidator, InternalValidateResult, ErrorCode} from "../types";
 export default class ChinaIDValidator implements InternalValidator {
 
     validate(idNumber:string):InternalValidateResult {
+        // This Chinese ID validator only supports the 18 digit validation.
         // Logic and code is copied from https://segmentfault.com/a/1190000004437362
         if (typeof idNumber !== 'string') {
             return {
@@ -56,7 +57,7 @@ export default class ChinaIDValidator implements InternalValidator {
         var time = d.getTime();
         var arrInt = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
         var arrCh : any = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
-        var sum : number = 0, i : number, residue : number;
+        var sum : number = 0, i : number, residue : string;
 
         if (!/^\d{17}(\d|x)$/i.test(idNumber)) {
             return {
@@ -82,7 +83,7 @@ export default class ChinaIDValidator implements InternalValidator {
             sum += parseInt(idNumber.substr(i, 1)) * arrInt[i];
         }
         residue = arrCh[sum % 11];
-        if (residue !== parseInt(idNumber.substr(17, 1))) {
+        if (residue !== idNumber.substr(17, 1)) {
             return {
                 success: false,
                 reason: ErrorCode.error_checksum
